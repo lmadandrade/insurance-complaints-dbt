@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: insurance_complaints_raw
+    description: "Raw insurance complaints data loaded into BigQuery"
+    database: project-76025d8f-900f-4129-8e7
+    schema: raw
+    tables:
+      - name: policies
+        description: "Raw policies data at policy grain (one row per policy)"
+      - name: complaints
+        description: "customer complaints linked to policies"
+      - name: complaint_events
+        description: "Event log tracking the lifecycle of each complaint"
