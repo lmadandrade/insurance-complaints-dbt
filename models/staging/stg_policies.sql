@@ -1,6 +1,6 @@
 select
     policy_id,
-    customer_id
+    customer_id,
     product_name,
     business_partner,
     risk_carrier,

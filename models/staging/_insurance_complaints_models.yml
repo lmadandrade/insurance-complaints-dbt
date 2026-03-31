@@ -1,0 +1,121 @@
+version: 2
+
+models:
+  - name: stg_policies
+    description: Cleaned staging model for policy data (one row per policy)
+    columns:
+      - name: policy_id
+        description: Unique identifier for a policy
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: Unique identifier for a customer
+        tests:
+          - not_null
+
+      - name: product_name
+        description: Insurance product name
+
+      - name: business_partner
+        description: Business partner through which the policy was sold
+
+      - name: risk_carrier
+        description: Insurance carrier underwriting the policy
+
+      - name: policy_start_date
+        description: Policy coverage start date
+
+      - name: policy_end_date
+        description: Policy coverage end date
+
+      - name: policy_status
+        description: Current policy lifecycle status
+        tests:
+          - accepted_values:
+              values: ['active', 'expired', 'cancelled']
+
+      - name: customer_country
+        description: ISO 2-letter country code of the customer
+
+
+  - name: stg_complaints
+    description: Cleaned staging model for insurance complaints (one row per complaint)
+    columns:
+      - name: complaint_id
+        description: Unique identifier for a complaint
+        tests:
+          - not_null
+          - unique
+
+      - name: policy_id
+        description: Policy associated with the complaint
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_policies')
+              field: policy_id
+
+      - name: complaint_received_at
+        description: Timestamp when the complaint was received
+
+      - name: complaint_channel
+        description: Channel through which the complaint was submitted
+
+      - name: complaint_classification
+        description: High-level complaint classification
+
+      - name: complaint_category
+        description: Complaint category
+
+      - name: complaint_reason
+        description: Specific reason for the complaint
+
+      - name: complaint_priority
+        description: Priority assigned to the complaint
+
+      - name: complaint_status
+        description: Current complaint status
+
+      - name: ombudsman_status
+        description: Ombudsman escalation or review status, if applicable
+
+      - name: resolution_type
+        description: Type of resolution applied to the complaint
+
+      - name: redress_amount
+        description: Monetary redress amount linked to the complaint
+
+      - name: is_vulnerable_customer
+        description: Indicates whether the customer is flagged as vulnerable
+
+      - name: summary
+        description: Free text complaint summary
+
+
+  - name: stg_complaint_events
+    description: Cleaned staging model for complaint lifecycle events (one row per complaint event)
+    columns:
+      - name: event_id
+        description: Unique identifier for a complaint event.
+        tests:
+          - not_null
+          - unique
+
+      - name: complaint_id
+        description: Complaint associated with the event
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_complaints')
+              field: complaint_id
+
+      - name: event_timestamp
+        description: Timestamp when the event occurred
+
+      - name: event_type
+        description: Type of complaint lifecycle event
+
+      - name: actor
+        description: Actor who triggered or recorded the event
