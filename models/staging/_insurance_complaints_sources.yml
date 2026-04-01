@@ -8,7 +8,35 @@ sources:
     tables:
       - name: policies
         description: "Raw policies data at policy grain (one row per policy)"
+        columns:
+          - name: policy_id
+            description: Unique identifier for a policy in the raw source
+            tests:
+              - not_null
+              - unique
+
       - name: complaints
-        description: "customer complaints linked to policies"
+        description: "Raw customer complaints linked to policies"
+        columns:
+          - name: complaint_id
+            description: Unique identifier for a complaint in the raw source
+            tests:
+              - not_null
+              - unique
+          - name: policy_id
+            description: Policy identifier linked to a complaint
+            tests:
+              - not_null
+
       - name: complaint_events
         description: "Event log tracking the lifecycle of each complaint"
+        columns:
+          - name: event_id
+            description: Unique identifier for a complaint event in the raw source
+            tests:
+              - not_null
+              - unique
+          - name: complaint_id
+            description: Complaint identifier linked to the event
+            tests:
+              - not_null

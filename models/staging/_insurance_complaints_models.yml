@@ -34,7 +34,8 @@ models:
         description: Current policy lifecycle status
         tests:
           - accepted_values:
-              values: ['active', 'expired', 'cancelled']
+              arguments:
+                values: ['active', 'expired', 'cancelled']
 
       - name: customer_country
         description: ISO 2-letter country code of the customer
@@ -54,8 +55,9 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('stg_policies')
-              field: policy_id
+              arguments:
+                to: ref('stg_policies')
+                field: policy_id
 
       - name: complaint_received_at
         description: Timestamp when the complaint was received
@@ -108,8 +110,9 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('stg_complaints')
-              field: complaint_id
+              arguments:
+                to: ref('stg_complaints')
+                field: complaint_id
 
       - name: event_timestamp
         description: Timestamp when the event occurred
@@ -117,5 +120,5 @@ models:
       - name: event_type
         description: Type of complaint lifecycle event
 
-      - name: actor
+      - name: event_actor
         description: Actor who triggered or recorded the event
