@@ -1,0 +1,82 @@
+version: 2
+
+models:
+  - name: int_complaint_timeline
+    description: Complaint level intermediate model that summarizes key lifecycle milestones from complaint event history. Each row represents one complaint and captures the first time major complaint events occurred
+
+    columns:
+      - name: complaint_id
+        description: Unique identifier for a complaint
+        tests:
+          - not_null
+          - unique
+
+      - name: complaint_received_at
+        description: Timestamp when the complaint was originally received
+
+      - name: first_acknowledged_at
+        description: Timestamp when the complaint was first acknowledged
+
+      - name: first_response_sent_at
+        description: Timestamp when the first response was sent for the complaint
+
+      - name: first_resolved_at
+        description: Timestamp when the complaint was first marked as resolved
+
+      - name: first_reopened_at
+        description: Timestamp when the complaint was first reopened after being resolved (if applicable)
+
+      - name: was_reopened_flag
+        description: Indicates whether the complaint was reopened at least once
+
+      - name: first_ombudsman_escalated_at
+        description: Timestamp when the complaint was first escalated to the ombudsman process (if applicable)
+
+      - name: total_event_count
+        description: Total number of lifecycle events recorded for the complaint
+
+
+
+  - name: int_complaint_sla
+    description: Complaint-level intermediate model that calculates SLA timings and SLA status flags based on complaint lifecycle milestones
+
+    columns:
+      - name: complaint_id
+        description: Unique identifier for a complaint
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('int_complaint_timeline')
+                field: complaint_id
+
+      - name: complaint_received_at
+        description: Timestamp when the complaint was originally received
+
+      - name: first_acknowledged_at
+        description: Timestamp when the complaint was first acknowledged
+
+      - name: first_response_sent_at
+        description: Timestamp when the first response was sent for the complaint
+
+      - name: first_resolved_at
+        description: Timestamp when the complaint was first marked as resolved
+
+      - name: hours_to_first_acknowledgment
+        description: Number of hours between complaint receipt and first acknowledgment
+
+      - name: hours_to_first_response
+        description: Number of hours between complaint receipt and first response sent
+
+      - name: days_to_first_resolution
+        description: Number of days between complaint receipt and first resolution
+
+      - name: ack_sla_met_flag
+        description: Indicates whether the complaint met the acknowledgment SLA target of 24 hours
+
+      - name: response_sla_met_flag
+        description: Indicates whether the complaint met the response SLA target of 72 hours
+
+      - name: resolution_sla_met_flag
+        description: Indicates whether the complaint met the resolution SLA target of 5 days
