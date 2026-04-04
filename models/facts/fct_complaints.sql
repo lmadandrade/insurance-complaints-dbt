@@ -44,7 +44,9 @@ timeline as (
         first_acknowledged_at,
         first_response_sent_at,
         first_resolved_at,
+        first_reopened_at,
         first_ombudsman_escalated_at,
+        was_reopened_flag,
         total_event_count
     from {{ ref('int_complaint_timeline') }}
 ),
@@ -91,6 +93,7 @@ select
     t.first_acknowledged_at,
     t.first_response_sent_at,
     t.first_resolved_at,
+    t.first_reopened_at,
     t.first_ombudsman_escalated_at,
     t.total_event_count,
     s.hours_to_first_acknowledgment,
@@ -98,7 +101,8 @@ select
     s.days_to_first_resolution,
     s.ack_sla_met_flag,
     s.response_sla_met_flag,
-    s.resolution_sla_met_flag
+    s.resolution_sla_met_flag,
+    t.was_reopened_flag
 
 from complaints c
 left join policies p

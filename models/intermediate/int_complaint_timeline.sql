@@ -47,7 +47,12 @@ select
     t.first_resolved_at,
     t.first_ombudsman_escalated_at,
     t.first_reopened_at,
+    case
+        when t.first_reopened_at is not null then true
+        else false
+    end as was_reopened_flag,
     t.total_event_count
+
 from complaints c
 left join timeline t
     on c.complaint_id = t.complaint_id
