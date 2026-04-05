@@ -1,0 +1,120 @@
+version: 2
+
+models:
+  - name: fct_complaints
+    description: Complaint level fact model that combines complaint details, policy context, lifecycle milestones and SLA indicators into a reusable analytical table for reporting
+
+    columns:
+      - name: complaint_id
+        description: Unique identifier for a complaint
+        tests:
+          - not_null
+          - unique
+
+      - name: policy_id
+        description: Policy associated with the complaint
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_policies')
+                field: policy_id
+
+      - name: complaint_received_at
+        description: Timestamp when the complaint was received
+
+      - name: complaint_channel
+        description: Channel through which the complaint was submitted
+
+      - name: complaint_classification
+        description: High level complaint classification
+
+      - name: complaint_category
+        description: Complaint category
+
+      - name: complaint_reason
+        description: Specific reason for the complaint
+
+      - name: complaint_priority
+        description: Priority assigned to the complaint
+
+      - name: complaint_status
+        description: Current complaint status
+
+      - name: ombudsman_status
+        description: Ombudsman escalation or review status (if applicable)
+
+      - name: resolution_type
+        description: Type of resolution applied to the complaint
+
+      - name: redress_amount
+        description: Monetary redress amount linked to the complaint
+
+      - name: is_vulnerable_customer
+        description: Indicates whether the customer is flagged as vulnerable
+
+      - name: summary
+        description: Free text complaint summary
+
+      - name: customer_id
+        description: Unique identifier for the customer linked to the policy
+
+      - name: product_name
+        description: Insurance product name linked to the policy
+
+      - name: business_partner
+        description: Business partner through which the policy was sold
+
+      - name: risk_carrier
+        description: Insurance carrier underwriting the policy
+
+      - name: policy_start_date
+        description: Policy coverage start date
+
+      - name: policy_end_date
+        description: Policy coverage end date
+
+      - name: policy_status
+        description: Current policy lifecycle status
+
+      - name: customer_country
+        description: ISO country code of the customer
+
+      - name: first_acknowledged_at
+        description: Timestamp when the complaint was first acknowledged
+
+      - name: first_response_sent_at
+        description: Timestamp when the first response was first sent
+
+      - name: first_resolved_at
+        description: Timestamp when the complaint was first marked as resolved
+
+      - name: first_reopened_at
+        description: Timestamp when the complaint was first reopened after resolution (if applicable)
+
+      - name: was_reopened_flag
+        description: Indicates whether the complaint was reopened at least once
+
+      - name: first_ombudsman_escalated_at
+        description: Timestamp when the complaint was first escalated to the ombudsman process (if applicable)
+
+      - name: total_event_count
+        description: Total number of complaint lifecycle events recorded
+
+      - name: hours_to_first_acknowledgment
+        description: Number of hours between complaint receipt and first acknowledgment
+
+      - name: hours_to_first_response
+        description: Number of hours between complaint receipt and first response sent
+
+      - name: days_to_first_resolution
+        description: Number of days between complaint receipt and first resolution
+
+      - name: ack_sla_met_flag
+        description: Indicates whether the complaint met the acknowledgment SLA target of 24 hours
+
+      - name: response_sla_met_flag
+        description: Indicates whether the complaint met the response SLA target of 72 hours
+
+      - name: resolution_sla_met_flag
+        description: Indicates whether the complaint met the resolution SLA target of 5 days
