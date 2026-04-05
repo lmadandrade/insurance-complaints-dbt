@@ -94,6 +94,11 @@ models:
 
       - name: was_reopened_flag
         description: Indicates whether the complaint was reopened at least once
+        tests:
+          - accepted_values:
+              arguments:
+                values: [true, false]
+                quote: false
 
       - name: first_ombudsman_escalated_at
         description: Timestamp when the complaint was first escalated to the ombudsman process (if applicable)
@@ -112,9 +117,24 @@ models:
 
       - name: ack_sla_met_flag
         description: Indicates whether the complaint met the acknowledgment SLA target of 24 hours
+        tests:
+          - accepted_values:
+              arguments:
+                values: [true, false]
+                quote: false
 
       - name: response_sla_met_flag
         description: Indicates whether the complaint met the response SLA target of 72 hours
+        tests:
+          - accepted_values:
+              arguments:
+                values: [true, false]
+                quote: false
 
       - name: resolution_sla_met_flag
         description: Indicates whether the complaint met the resolution SLA target of 5 days
+        tests:
+          - accepted_values:
+              arguments:
+                values: [true, false]
+                quote: false
