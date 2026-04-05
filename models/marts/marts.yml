@@ -1,0 +1,131 @@
+version: 2
+
+models:
+  - name: mart_complaint_kpis_monthly
+    description: Monthly summary model of complaint volume and ops performance metrics for trend reporting
+
+    columns:
+      - name: complaint_month
+        description: Month in which the complaint was received
+        tests:
+          - not_null
+          - unique
+
+      - name: total_complaints
+        description: Total number of complaints received in the month
+
+      - name: resolved_complaints
+        description: Number of complaints marked as resolved in the month
+
+      - name: complaints_with_redress
+        description: Number of complaints with a redress amount greater than zero
+
+      - name: vulnerable_customer_complaints
+        description: Number of complaints flagged as involving vulnerable customers
+
+      - name: reopened_complaints
+        description: Number of complaints that were reopened at least once
+
+      - name: ombudsman_escalations
+        description: Number of complaints escalated to the ombudsman process
+
+      - name: avg_hours_to_first_acknowledgment
+        description: Average hours between complaint receipt and first acknowledgment for complaints received in the month
+
+      - name: avg_hours_to_first_response
+        description: Average hours between complaint receipt and first response for complaints received in the month
+
+      - name: avg_days_to_first_resolution
+        description: Average days between complaint receipt and first resolution for complaints received in the month
+
+      - name: ack_sla_met_rate
+        description: Proportion of complaints that met the acknowledgment SLA target
+
+      - name: response_sla_met_rate
+        description: Proportion of complaints that met the response SLA target
+
+      - name: resolution_sla_met_rate
+        description: Proportion of complaints that met the resolution SLA target
+
+  - name: mart_complaint_kpis_by_bp
+    description: BP level summary model of complaint volume, SLA performance and redress metrics
+
+
+
+    columns:
+      - name: business_partner
+        description: Business partner through which the policy was sold
+        tests:
+          - not_null
+          - unique
+
+      - name: total_complaints
+        description: Total number of complaints linked to the business partner
+
+      - name: resolved_complaints
+        description: Number of complaints marked as resolved for the business partner
+
+      - name: complaints_with_redress
+        description: Number of complaints with a redress amount greater than zero for the business partner
+
+      - name: vulnerable_customer_complaints
+        description: Number of complaints flagged as involving vulnerable customers for the business partner
+
+      - name: reopened_complaints
+        description: Number of complaints that were reopened at least once for the business partner
+
+      - name: ombudsman_escalations
+        description: Number of complaints escalated to the ombudsman process for the business partner
+
+      - name: total_redress_amount
+        description: Total redress amount associated with complaints for the business partner
+
+      - name: avg_redress_amount
+        description: Average redress amount across complaints for the business partner
+
+      - name: avg_hours_to_first_acknowledgment
+        description: Average hours between complaint receipt and first acknowledgment for the business partner
+
+      - name: avg_hours_to_first_response
+        description: Average hours between complaint receipt and first response for the business partner
+
+      - name: avg_days_to_first_resolution
+        description: Average days between complaint receipt and first resolution for the business partner
+
+      - name: ack_sla_met_rate
+        description: Proportion of complaints that met the acknowledgment SLA target for the business partner
+
+      - name: response_sla_met_rate
+        description: Proportion of complaints that met the response SLA target for the business partner
+
+      - name: resolution_sla_met_rate
+        description: Proportion of complaints that met the resolution SLA target for the business partner
+
+  - name: mart_complaint_redress_monthly
+    description: Monthly summary model of complaint redress outcomes and amounts
+
+
+    columns:
+      - name: complaint_month
+        description: Month in which the complaint was received
+        tests:
+          - not_null
+          - unique
+
+      - name: total_complaints
+        description: Total number of complaints received in the month
+
+      - name: complaints_with_redress
+        description: Number of complaints with a redress amount greater than zero
+
+      - name: redress_rate
+        description: Proportion of complaints in the month with a redress amount greater than zero
+
+      - name: total_redress_amount
+        description: Total redress amount associated with complaints received in the month
+
+      - name: avg_redress_amount
+        description: Average redress amount across complaints received in the month
+
+      - name: max_redress_amount
+        description: Highest redress amount recorded for complaints received in the month
